@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verificación de Boleto</title>
+  <style>
+    body { 
+      font-family: sans-serif; 
+      max-width: 600px; 
+      margin: 40px auto; 
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    input, button { 
+      padding: 12px; 
+      font-size: 1rem; 
+      width: 100%; 
+      margin-top: 10px; 
+    }
+    button {
+      background: #2196f3;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    #resultado { 
+      margin-top: 20px; 
+      font-size: 1.2rem; 
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>Verificación de Boleto</h2>
+  <p>Ingresa el código o escanea el QR del boleto:</p>
+
+  <input id="codigo" placeholder="Código del boleto" />
+  <button onclick="verificar()">Verificar</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    async function verificar() {
+      const codigo = document.getElementById("codigo").value.trim();
+      if (!codigo) return;
+
+      // URL del WebApp de Google Apps Script
+      const url = https://script.google.com/macros/s/TU_WEBAPP_ID/exec?codigo=${codigo};
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.encontrado === false) {
+        document.getElementById("resultado").innerText = "❌ Código no válido";
+      } else if (data.canjeado) {
+        document.getElementById("resultado").innerText = "⚠️ Este boleto YA fue canjeado";
+      } else {
+        document.getElementById("resultado").innerText = 🎉 Premio: ${data.premio};
+      }
+    }
+  </script>
+</body>
+</html>
