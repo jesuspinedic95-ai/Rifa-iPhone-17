@@ -1,0 +1,106 @@
+<! DOCTYPE html>
+<html lang="es">
+<cabeza>
+  <meta charset="UTF-8">
+ <meta nombre="viewport" content="width=device-width, initial-scale=1.0">
+ <título>Verificar Código</título>
+ <estilo>
+ cuerpo {
+ familia tipográfica: Arial;
+ Antecedentes: #f2f2f2;
+ pantalla: flex;
+ justificar-contenido: centro;
+ alinear-ítems: centro;
+ Altura: 100vh;
+ marje: 0;
+    }
+    .box {
+ Antecedentes: blanco;
+ relleno: 30px;
+ ancho: 90%;
+ Ancho máximo: 400px;
+ Radio de frontera: 10px;
+ Sombra de caja: 0 0 10px RGB (0,0,0,0,2);
+      text-align: center;
+    }
+ Entrada {
+ ancho: 100%;
+ relleno: 10px;
+ tamaño de fuente: 16px;
+ margen inferior: 15px;
+ borde: 1px sólido #ccc;
+ Radio de frontera: 5px;
+    }
+    button {
+ ancho: 100%;
+ relleno: 12px;
+ Antecedentes: #007bff;
+ frontera: ninguna;
+ color: blanco;
+ tamaño de fuente: 16px;
+ Radio de frontera: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+ Antecedentes: #005dc1;
+    }
+    #resultado {
+ margen arriba: 20px;
+ tamaño de fuente: 18px;
+    }
+ </estilo>
+</cabeza>
+<cuerpo>
+
+  <div class="box">
+ <h2>Comprobar Premium</h2>
+    <input id="codigo" type="text" placeholder="Ingresa tu código">
+    <button onclick="verificar()">Verificar Código</button>
+    <div id="resultado"></div>
+  </div>
+
+<guion>
+  // URL de tu App Script (modo POST)
+  const API_URL = "https://script.google.com/macros/s/AKfycbyMFO2ErAmT4mfgD1VO4gzksPVI2_jPBRs7D1Hy6IaDPUlSXglGaRfD3cEBkxf_9K71/exec";
+
+ comprobación de función() {
+    const code = document.getElementById("codigo").value.trim();
+    const resultBox = document.getElementById("resultado");
+
+ if (código === "") {
+      resultBox.innerHTML = "Ingresa un código.";
+ devolución;
+    }
+
+    resultBox.innerHTML = "Verificando...";
+
+    fetch(API_URL, {
+ método: "POST",
+ encabezados: { "Content-Type": "application/json" },
+      body: JSON.stringify({ codigo: code })
+    })
+    .then(res => res.json())
+    .then(data => {
+ console.log(datos);
+
+      if (data.status === "ok") {
+        resultBox.innerHTML = <b>¡Premio encontrado!</b><br>Premio: ${data.premio};
+      } 
+ si no (data.status === "usado") {
+        resultBox.innerHTML = <span style="color:red;"><b>Este código ya fue canjeado</b></span>;
+      }
+      else if (data.status === "no_existe") {
+        resultBox.innerHTML = <span style="color:red;">Código no encontrado</span>;
+      }
+      else {
+        resultBox.innerHTML = "Error desconocido.";
+      }
+    })
+    .catch(err => {
+      resultBox.innerHTML = "Error al conectar con el servidor.";
+    });
+  }
+</guion>
+
+</cuerpo>
+</html>
